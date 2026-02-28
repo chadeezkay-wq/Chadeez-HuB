@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chadeez Data Hub | Premium Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+   
+  <link rel="icon" type="image/x-icon" href="chadeez.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --navy: #1a4175;
+            --cyan: #4cc9f0;
+            --at-blue: #0056b3;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Minimalist Input Styling */
+        input {
+            width: 100%;
+            height: 48px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #1e293b;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+
+        input:focus {
+            border-color: var(--cyan);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(76, 201, 240, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 6px;
+            margin-left: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--navy);
+            color: white;
+            font-weight: 700;
+            padding: 16px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #0f2d5a;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(26, 65, 117, 0.2);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a4175 0%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(#fff 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 50; }
+        
+        @media (max-width: 1024px) {
+            .sidebar { position: fixed; transform: translateX(-100%); height: 100vh; }
+            .sidebar.open { transform: translateX(0); }
+        }
+
+        .glass-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.05);
+            border-color: var(--cyan);
+        }
+
+        .nav-link.active {
+            background: var(--navy);
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 65, 117, 0.2);
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-wrapper { overflow: hidden; white-space: nowrap; }
+        .ticker-text { display: inline-block; animation: ticker 40s linear infinite; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .logo-accent { color: var(--cyan); }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-slate-900">
+
+    <div id="mobileOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden"></div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/233206372780" target="_blank" class="whatsapp-float bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl">
+        <i class="bi bi-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 xl:w-72 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col">
+        <div class="p-6">
+            <div class="flex items-center gap-3">
+                <svg width="40" height="40" viewBox="0 0 100 100" class="text-[#1a4175]">
+                    <path d="M30 50 Q30 30 50 30 Q70 30 70 50 Q70 70 50 70 Q30 70 30 50" fill="none" stroke="currentColor" stroke-width="8"/>
+                    <path d="M60 40 L75 25 L85 30 M75 25 L75 35" fill="none" stroke="#4cc9f0" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="50" cy="50" r="15" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+                </svg>
+                <h1 class="text-xl font-black tracking-tight text-[#1a4175] uppercase">Chadeez<span class="logo-accent">Hub</span></h1>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+            <div class="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Navigation</div>
+            <button onclick="showPage('overview')" id="nav-overview" class="nav-link active w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold transition-all">
+                <i class="bi bi-grid-1x2-fill"></i> Overview
+            </button>
+            <button onclick="showPage('mtn')" id="nav-mtn" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-reception-4 text-yellow-500"></i> MTN Portal
+            </button>
+            <button onclick="showPage('vodafone')" id="nav-vodafone" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-phone-fill text-red-500"></i> Vodafone Portal
+            </button>
+            <button onclick="showPage('airteltigo')" id="nav-airteltigo" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-broadcast-pin text-blue-600"></i> AirtelTigo Portal
+            </button>
+            <button onclick="showPage('calculator')" id="nav-calculator" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-calculator-fill text-blue-500"></i> Savings Calc
+            </button>
+            <div class="px-4 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Community</div>
+            <button onclick="showPage('testimonials')" id="nav-testimonials" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-heart-fill text-pink-500"></i> Reviews
+            </button>
+            <button onclick="showPage('referral')" id="nav-referral" class="nav-link w-full p-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-all">
+                <i class="bi bi-people-fill text-purple-500"></i> Refer & Earn
+            </button>
+        </nav>
+
+        <div class="p-4 mt-auto">
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                <p class="text-[10px] font-bold text-[#1a4175] uppercase mb-1">Support Center</p>
+                <p class="text-[11px] text-slate-500 mb-3">Chadeez expert team is online.</p>
+                <a href="https://wa.me/233206372780" target="_blank" class="w-full py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors">
+                    <i class="bi bi-whatsapp text-green-500"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 bg-white">
+        <!-- Ticker -->
+        <div class="h-8 bg-[#1a4175] text-white flex items-center ticker-wrapper flex-shrink-0">
+            <div class="bg-[#0f2d5a] h-full flex items-center px-4 z-10 font-bold text-[10px] uppercase tracking-wider">CHADEEZ UPDATES</div>
+            <div class="ticker-text text-[11px] font-medium">
+                 AirtelTigo (AT) Big Time packs now updated • Vodafone (Telecel) Mega packs now available • MTN 20GB monthly bundle price dropped to GHC 55.00.  
+                 Your Reliable Data Partner in Agona Nkwanta, Ghana
+            </div>
+        </div>
+
+        <header class="h-16 border-b border-slate-100 flex items-center justify-between px-6 lg:px-10 flex-shrink-0 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden w-8 h-8 flex items-center justify-center bg-slate-50 rounded-lg">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h2 id="pageTitle" class="text-base font-bold text-slate-800">Overview</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex flex-col items-end">
+                    <span class="text-xs font-bold text-[#1a4175]">Chadeez Admin</span>
+                    <span class="text-[10px] text-slate-400">Verified System</span>
+                </div>
+                <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-[#1a4175] border border-blue-100 font-bold text-sm">
+                    CH
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+            
+            <!-- OVERVIEW PAGE -->
+            <div id="overview" class="page-section space-y-10">
+                <div class="hero-gradient rounded-[2.5rem] p-8 lg:p-14 text-white relative flex flex-col lg:flex-row items-center gap-10 shadow-xl shadow-blue-900/10">
+                    <div class="hero-pattern"></div>
+                    <div class="relative z-10 lg:w-3/5">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-cyan/20 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-white/10">
+                            <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span> Chadeez Hub Online
+                        </span>
+                        <h2 class="text-4xl xl:text-5xl font-extrabold mb-4 leading-tight">Global Data Intelligence <br/><span class="text-cyan">At Your Fingertips.</span></h2>
+                        <p class="text-blue-100 text-base mb-8 max-w-lg leading-relaxed">Your Reliable Data Partner in Agona, Ghana</p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="showPage('mtn')" class="px-8 py-3.5 bg-white text-[#1a4175] rounded-xl font-bold text-sm hover:bg-blue-50 transition-all flex items-center gap-2">
+                                <i class="bi bi-cart-fill"></i> Get Data Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-3xl" onclick="showPage('mtn')">
+                        <div class="w-10 h-10 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="bi bi-reception-4"></i>
+                        </div>
+                        <h4 class="font-bold">MTN Ghana</h4>
+                        <p class="text-xs text-slate-500">Most Stable Network</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-3xl" onclick="showPage('vodafone')">
+                        <div class="w-10 h-10 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="bi bi-phone-fill"></i>
+                        </div>
+                        <h4 class="font-bold">Vodafone (Telecel)</h4>
+                        <p class="text-xs text-slate-500">No Expiry Bundles</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-3xl" onclick="showPage('airteltigo')">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="bi bi-broadcast-pin"></i>
+                        </div>
+                        <h4 class="font-bold">AirtelTigo (AT)</h4>
+                        <p class="text-xs text-slate-500">Cheapest Rates</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MTN Portal -->
+            <div id="mtn" class="page-section hidden animate-fade-in">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">1GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 4.97</p>
+                        <button onclick="buyData('MTN', '1GB Daily', 'GHC 4.97')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">2GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 10.26</p>
+                        <button onclick="buyData('MTN', '2GB Daily', 'GHC 10.26')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">3GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 15.26</p>
+                        <button onclick="buyData('MTN', '3GB Daily', 'GHC 15.26')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">4GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 21.06</p>
+                        <button onclick="buyData('MTN', '4GB Daily', 'GHC 21.06')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">5GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 25.70</p>
+                        <button onclick="buyData('MTN', '5GB Daily', 'GHC 25.70')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">6GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 28.62</p>
+                        <button onclick="buyData('MTN', '6GB Daily', 'GHC 28.62')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">8GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 38.32</p>
+                        <button onclick="buyData('MTN', '8GB Daily', 'GHC 38.32')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">10GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 46.98</p>
+                        <button onclick="buyData('MTN', '10GB Daily', 'GHC 46.98')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">15GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 66.98</p>
+                        <button onclick="buyData('MTN', '15GB Daily', 'GHC 66.98')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">20GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 88.56</p>
+                        <button onclick="buyData('MTN', '20GB Daily', 'GHC 88.56')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">25GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 111.24</p>
+                        <button onclick="buyData('MTN', '25GB Daily', 'GHC 111.24')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">30GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 135.00</p>
+                        <button onclick="buyData('MTN', '30GB Daily', 'GHC 135.00')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-t-4 border-t-yellow-400">
+                        <h4 class="text-xl font-bold">50GB Daily</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 221.40</p>
+                        <button onclick="buyData('MTN', '50GB Daily', 'GHC 221.40')" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Buy Bundle</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vodafone Portal -->
+            <div id="vodafone" class="page-section hidden animate-fade-in space-y-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">5GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 27.00</p>
+                        <button onclick="buyData('Vodafone', '5GB Big Time', 'GHC 27.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">10GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 52.00</p>
+                        <button onclick="buyData('Vodafone', '10GB Big Time', 'GHC 52.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">15GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 70.00</p>
+                        <button onclick="buyData('Vodafone', '15GB Big Time', 'GHC 70.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">20GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 87.00</p>
+                        <button onclick="buyData('Vodafone', '20GB Big Time', 'GHC 87.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">30GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 127.00</p>
+                        <button onclick="buyData('Vodafone', '30GB Big Time', 'GHC 127.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-red-600">
+                        <h4 class="text-xl font-bold">40GB Big Time</h4>
+                        <p class="text-2xl font-black text-[#1a4175] mt-1 mb-6">GHC 149.00</p>
+                        <button onclick="buyData('Vodafone', '40GB Big Time', 'GHC 149.00')" class="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest">Order Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AirtelTigo Portal (The Requested Section) -->
+            <div id="airteltigo" class="page-section hidden animate-fade-in space-y-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                            <i class="bi bi-broadcast-pin text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-slate-800">AirtelTigo (AT) Portal</h3>
+                            <p class="text-xs text-slate-500 font-medium">Unbeatable value. Instant Big Time delivery.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                        <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Fast Delivery</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- AT Pack 1 -->
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">AT Big Time</span>
+                            <i class="bi bi-star-fill text-yellow-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">1GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 7.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '1GB Big Time', 'GHC 7.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+
+                    <!-- AT Pack 2 -->
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Best Seller</span>
+                            <i class="bi bi-fire text-orange-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">2GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 12.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '2GB Big Time', 'GHC 12.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+
+                    <!-- AT Pack 3 -->
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Super Saver</span>
+                            <i class="bi bi-graph-up-arrow text-green-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">3GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 16.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '3GB Big Time', 'GHC 16.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+
+                    <!-- AT Pack 4 -->
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Mega Pack</span>
+                            <i class="bi bi-hdd-network-fill text-slate-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">4GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 20.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '4GB Big Time', 'GHC 20.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+                    
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Mega Pack</span>
+                            <i class="bi bi-hdd-network-fill text-slate-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">5GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 24.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '5GB Big Time', 'GHC 24.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-3xl border-l-4 border-l-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Mega Pack</span>
+                            <i class="bi bi-hdd-network-fill text-slate-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">6GB Pack</h4>
+                        <p class="text-sm text-slate-400 mb-4 font-medium italic">Never Expires</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-2xl font-black text-[#1a4175]">GHC 28.00</span>
+                        </div>
+                        <button onclick="buyData('AirtelTigo', '6GB Big Time', 'GHC 28.00')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savings Calculator -->
+            <div id="calculator" class="page-section hidden animate-fade-in max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <h3 class="text-3xl font-extrabold text-slate-800">Savings Calculator</h3>
+                </div>
+                <div class="glass-card p-8 rounded-[2rem]">
+                    <input type="range" id="usageRange" min="5" max="100" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cyan" oninput="calculateSavings()">
+                    <div class="flex justify-between mt-2 font-bold text-[#1a4175]"><span id="usageVal">20</span> GB</div>
+                    <div class="mt-8 flex flex-col items-center justify-center p-6 bg-[#1a4175] rounded-3xl text-white">
+                        <p class="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Total Annual Savings</p>
+                        <h2 id="totalSavings" class="text-5xl font-black tracking-tight mb-2">GHC 780</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Sections (Testimonials, Referral) - Keeping basic structure -->
+         <!-- Reviews Page -->
+            <div id="testimonials" class="page-section hidden animate-fade-in">
+                <div class="flex flex-col lg:flex-row justify-between items-end mb-10 gap-6">
+                    <div>
+                        <h3 class="text-3xl font-extrabold text-slate-800">User Reviews</h3>
+                        <p class="text-slate-500 mt-2">See why 2,000+ Ghanaians choose Chadeez Hub.</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-100 shadow-sm">
+                        <span class="text-xl font-black text-slate-800">4.9</span>
+                        <div class="flex text-yellow-400 gap-0.5">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <span class="text-xs text-slate-400 font-bold ml-2">842 Reviews</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-3xl">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FA</div>
+                            <div>
+                                <h5 class="text-sm font-bold">Andrew Asiem</h5>
+                                <p class="text-[10px] text-slate-400">Agona, Ghana</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed italic">"I was skeptical at first, but the delivery is literally instant. I save about GHC 50 every single month."</p>
+                        <div class="mt-4 flex text-yellow-400 text-[10px]"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Page -->
+            <div id="referral" class="page-section hidden animate-fade-in max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">Partner Program</span>
+                        <h3 class="text-4xl font-black text-slate-800 leading-tight">Share Chadeez Hub, <br/><span class="text-purple-600">Earn Commissions.</span></h3>
+                        <p class="text-slate-500 mt-6 text-sm leading-relaxed">Join our referral program and earn <span class="font-bold text-slate-800">GHC 1.00</span> for every new customer.</p>
+                        <div class="mt-10 p-4 bg-slate-900 rounded-2xl">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-2">Your Referral Link</label>
+                            <div class="flex gap-2">
+                                <input type="text" readonly value="rutherhub.com/ref?user=RA1042" class="flex-1 bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-2 text-xs outline-none">
+                                <button onclick="copyRef()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-500">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+    <!-- Modal Layout -->
+    <div id="buyModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="bg-white w-full max-w-sm rounded-3xl relative z-10 overflow-hidden shadow-2xl">
+            <div class="p-6 bg-[#1a4175] text-white flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Checkout</h3>
+                    <p class="text-[10px] text-blue-100 opacity-80" id="checkout-subtitle">Secure Chadeez Gateway</p>
+                </div>
+                <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            
+<form id="buyForm" class="p-6 space-y-4" action="https://formspree.io/f/mreavzbw" method="POST">
+                <input type="hidden" id="email_network">
+                <input type="hidden" id="email_bundle">
+                <input type="hidden" id="email_price">
+                
+                <div class="bg-blue-50 p-4 rounded-2xl flex justify-between items-center mb-2">
+                    <span class="text-xs font-bold text-slate-600">Amount to Pay</span>
+                    <span class="text-lg font-black text-blue-600" id="display-amount">GHC 0.00</span>
+                </div>
+
+
+            </form>
+                  <form id="buyForm" action="https://formspree.io/f/mreavzbw" method="POST" class="p-6 space-y-4">
+             <label>Full Name</label>
+             <input type="text" name="Name" placeholder="kofi Anan" required>
+
+             <label>Phone Number</label>
+             <input type="tel" name="phone_number" placeholder="024 XXX XXXX" required>
+                            <label>Select Network</label>
+    <select name="Network" required>
+        <option value="">-- Choose Network --</option>
+        <option value="MTN">MTN</option>
+        <option value="Vodafone">Vodafone</option>
+        <option value="AirtelTigo">AirtelTigo</option>
+    </select>
+
+
+             <label>Amount (GHC)</label>
+             <input type="number" name="Amount" placeholder="e.g. GHC55" required>
+
+             <label>Data Volume (GB)</label>
+             <input type="text" name="GB_SIZE" placeholder="e.g. 20GB" required>
+
+             <!-- Hidden field to identify the source -->
+             <input type="hidden" name="_subject" value="New Data Request - CHADEEZ HUB">
+
+             <button type="submit" class="submit-btn">
+                 Send Details to Admin
+             </button>
+
+         </form>
+        </div>
+    </div>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-link').forEach(n => {
+                n.classList.remove('active');
+                n.classList.add('text-slate-500');
+            });
+
+            const activeNav = document.getElementById('nav-' + id);
+            if (activeNav) {
+                activeNav.classList.add('active');
+                activeNav.classList.remove('text-slate-500');
+            }
+
+            document.getElementById('pageTitle').innerText = id.charAt(0).toUpperCase() + id.slice(1);
+            if (window.innerWidth < 1024) toggleSidebar();
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('hidden');
+        }
+
+        function calculateSavings() {
+            const usage = document.getElementById('usageRange').value;
+            document.getElementById('usageVal').innerText = usage;
+            const yearSavings = (usage * 6 - usage * 2.75) * 12;
+            document.getElementById('totalSavings').innerText = "GHC " + Math.round(yearSavings).toLocaleString();
+        }
+
+        function buyData(net, pkg, price) {
+            document.getElementById('email_network').value = net;
+            document.getElementById('email_bundle').value = pkg;
+            const numericPrice = price.replace(/[^\d.]/g, '');
+            document.getElementById('email_price').value = numericPrice;
+            document.getElementById('display-amount').innerText = price;
+            document.getElementById('checkout-subtitle').innerText = `${net} Hub - ${pkg}`;
+            document.getElementById('buyModal').classList.remove('hidden');
+            document.getElementById('buyModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('buyModal').classList.add('hidden');
+            document.getElementById('buyModal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
